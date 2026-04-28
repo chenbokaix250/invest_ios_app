@@ -1,11 +1,15 @@
-# Xcode
-*.xcodeproj/
-*.xcworkspace/
+# Xcode - User data only (keep project files)
 *.xcuserstate
 xcuserdata/
 *.xccheckout
+*.mode1v3
+*.mode2v3
+*.moved-aside
+
+# Build
 DerivedData/
 build/
+*.build/
 
 # Swift Package Manager
 .swiftpm/
@@ -14,12 +18,9 @@ Packages/
 # macOS
 .DS_Store
 
-# Build artifacts
-.build/
-
 # IDE
 .vscode/
 .idea/
 
-# API Keys (do not commit)
+# API Keys
 APIKeys.swift

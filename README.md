@@ -12,7 +12,7 @@
 - **波动率追踪**：显示 1D（当日）/1W（一周）/1M（本月）三个维度的价格波动百分比
 - **数据刷新**：下拉刷新更新所有股票的实时价格与波动率
 
-### 2. NASDAQ  browsing
+### 2. NASDAQ Browsing
 - 预置 10 只热门 NASDAQ 股票（AAPL、MSFT、GOOGL、AMZN、NVDA、META、TSLA、AVGO、ORCL、ADBE）
 - 实时获取价格与波动率数据
 - 一键添加/移除自选
@@ -34,42 +34,42 @@
 
 ---
 
-## 技术架构
+## 项目结构
 
 ```
-invest_app/
-├── App/
-│   └── invest_appApp.swift          # SwiftUI App 入口
+invest_ios_app/
+├── invest_app.xcodeproj/          # Xcode 项目文件
+├── invest_appApp.swift            # SwiftUI App 入口
 ├── Models/
-│   ├── Stock.swift                  # 股票数据模型（含分组）
-│   ├── Volatility.swift             # 波动率数据模型
-│   ├── AgentResult.swift            # Agent 分析结果
-│   └── AnalysisReport.swift        # 分析报告模型
+│   ├── Stock.swift                # 股票数据模型（含分组）
+│   ├── Volatility.swift           # 波动率数据模型
+│   ├── AgentResult.swift          # Agent 分析结果
+│   └── AnalysisReport.swift       # 分析报告模型
 ├── ViewModels/
-│   ├── WatchlistViewModel.swift    # 自选列表状态管理
-│   └── AnalysisViewModel.swift     # AI 分析状态管理
+│   ├── WatchlistViewModel.swift   # 自选列表状态管理
+│   └── AnalysisViewModel.swift    # AI 分析状态管理
 ├── Views/
-│   ├── ContentView.swift            # TabView 主页（自选 + NASDAQ）
-│   ├── WatchlistView.swift          # 自选列表页面
-│   ├── StockDetailView.swift       # 股票详情页面
-│   ├── AnalysisReportView.swift    # AI 分析报告页面
+│   ├── ContentView.swift           # TabView 主页（自选 + NASDAQ）
+│   ├── WatchlistView.swift        # 自选列表页面
+│   ├── StockDetailView.swift      # 股票详情页面
+│   ├── AnalysisReportView.swift   # AI 分析报告页面
 │   └── Components/
-│       ├── StockRow.swift           # 股票行组件（1D 波动率）
-│       ├── AddStockSheet.swift      # 添加股票搜索页
-│       ├── VolatilityCard.swift     # 波动率展示卡片
+│       ├── StockRow.swift         # 股票行组件（1D 波动率）
+│       ├── AddStockSheet.swift    # 添加股票搜索页
+│       ├── VolatilityCard.swift   # 波动率展示卡片
 │       └── AnalysisProgressView.swift # 分析进度弹窗
 ├── Services/
-│   ├── YahooFinanceService.swift   # Yahoo Finance API（价格/波动率/搜索）
-│   ├── FinnhubService.swift        # Finnhub API（公司信息）
-│   └── MiniMaxService.swift        # MiniMax M2.7 AI 接口
+│   ├── YahooFinanceService.swift  # Yahoo Finance API（价格/波动率/搜索）
+│   ├── FinnhubService.swift       # Finnhub API（公司信息）
+│   ├── MiniMaxService.swift       # MiniMax M2.7 AI 接口
+│   └── APIKeys.swift              # API Key 配置（不提交到 git）
 ├── MultiAgent/
-│   ├── AnalysisEngine.swift        # Master Agent 分析引擎
+│   ├── AnalysisEngine.swift       # Master Agent 分析引擎
+│   ├── PromptBuilder.swift        # Prompt 构造器
 │   └── ExpertAgents/              # 9 个专业 Agent 实现
-├── Utilities/
-│   ├── Constants.swift             # 常量定义
-│   └── Extensions.swift            # 扩展工具
-└── Resources/
-    └── Assets.xcassets
+└── Utilities/
+    ├── Constants.swift            # 常量定义
+    └── Extensions.swift           # 扩展工具
 ```
 
 ---
@@ -88,18 +88,22 @@ invest_app/
 
 ## 配置说明
 
-### MiniMax API
-在 `Services/MiniMaxService.swift` 中配置：
-```swift
-private let apiKey = "YOUR_MINIMAX_API_KEY"
-private let baseURL = "https://api.minimaxi.com/v1"
-```
+### API Key 配置
 
-### Finnhub API（可选）
-在 `Services/FinnhubService.swift` 中配置：
-```swift
-private let apiKey = "YOUR_FINNHUB_API_KEY"
-```
+1. 复制模板文件：
+   ```bash
+   cp Services/APIKeys.swift.template Services/APIKeys.swift
+   ```
+
+2. 编辑 `Services/APIKeys.swift`，填入真实 API Key：
+   ```swift
+   enum APIKeys {
+       static let finnhubAPIKey = "YOUR_FINNHUB_API_KEY"
+       static let miniMaxAPIKey = "YOUR_MINIMAX_API_KEY"
+   }
+   ```
+
+**注意**：`APIKeys.swift` 不会提交到 git（已在 .gitignore 中）
 
 ---
 
@@ -119,18 +123,20 @@ private let apiKey = "YOUR_FINNHUB_API_KEY"
 
 1. **克隆项目**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/chenbokaix250/invest_ios_app.git
    cd invest_ios_app
    ```
 
-2. **打开 Xcode**
+2. **配置 API Key**
+   ```bash
+   cp Services/APIKeys.swift.template Services/APIKeys.swift
+   # 编辑 APIKeys.swift 填入真实 Key
+   ```
+
+3. **打开 Xcode**
    ```bash
    open invest_app.xcodeproj
    ```
-
-3. **配置 API Key**
-   - 编辑 `MiniMaxService.swift` 填入 MiniMax API Key
-   - （可选）编辑 `FinnhubService.swift` 填入 Finnhub API Key
 
 4. **运行**
    - 选择目标模拟器或真机
