@@ -1,0 +1,10 @@
+import Foundation
+
+/// API Keys Configuration
+/// Copy this file to APIKeys.swift and fill in your actual API keys
+/// DO NOT commit APIKeys.swift to version control
+
+enum APIKeys {
+    static let finnhubAPIKey = "YOUR_FINNHUB_API_KEY"
+    static let miniMaxAPIKey = "YOUR_MINIMAX_API_KEY"
+}

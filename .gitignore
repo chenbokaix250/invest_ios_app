@@ -1,0 +1,25 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+DerivedData/
+build/
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+
+# macOS
+.DS_Store
+
+# Build artifacts
+.build/
+
+# IDE
+.vscode/
+.idea/
+
+# API Keys (do not commit)
+APIKeys.swift
